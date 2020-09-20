@@ -1,5 +1,25 @@
 'use strict';
 
+var fireballSize = 22;
+var getFireballSpeed = function (isMovingRight) {
+  if (isMovingRight) {
+    return 2;
+  } else {
+    return 5;
+  }
+};
+var wizardSpeed = 3;
+var wizardWidth = 70;
+var getWizardHeight = function () {
+  return 1.337 * wizardWidth;
+};
+var getWizardX = function (windowWidth) {
+  return (windowWidth - wizardWidth) / 2;
+};
+var getWizardY = function (windowHeight) {
+  return windowHeight - windowHeight / 3 - getWizardHeight();
+};
+
 window.GameConstants = {
   Fireball: {
     size: fireballSize || 24,
