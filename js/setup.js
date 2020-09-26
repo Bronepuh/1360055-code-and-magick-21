@@ -1,32 +1,32 @@
 'use strict';
 
-let WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-let WIZARD_SURENAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-let COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-let EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-let setupModal = document.querySelector('.setup');
-let wizardSimular = document.querySelector('.setup-similar');
-wizardSimular.classList.remove('hidden');
-let wizardSimularList = document.querySelector('.setup-similar-list');
-let wizardItemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+const WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+const WIZARD_SURENAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+const COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+const EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+const WIZARDS_COUNT = 4;
+const setupModal = document.querySelector('.setup');
+const wizardSimular = document.querySelector('.setup-similar');
+const wizardSimularList = document.querySelector('.setup-similar-list');
+const wizardItemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-let getRandomNumber = function (max) {
-  return Math.floor(Math.random() * Math.floor(max));
+const getRandomNumber = function (max) {
+  return Math.floor(Math.random() * max);
 };
 
-let getRandomElement = function (arr) {
+const getRandomElement = function (arr) {
   return arr[getRandomNumber(arr.length)];
 };
 
-let getRandomName = function () {
+const getRandomName = function () {
   return getRandomElement(WIZARD_NAMES);
 };
 
-let getRandomSurename = function () {
+const getRandomSurename = function () {
   return getRandomElement(WIZARD_SURENAMES);
 };
 
-let getRandomFullname = function () {
+const getRandomFullname = function () {
   let randomFullname = '';
   let i = getRandomNumber(2);
   if (i === 0) {
@@ -37,35 +37,23 @@ let getRandomFullname = function () {
   return randomFullname;
 };
 
-let wizards = [];
-
-let newWizard = function () {
-  let wizard = Object.create({}, {
-    name: {
-      get() {
-        return getRandomFullname();
-      },
-    },
-    coatColor: {
-      get() {
-        return getRandomElement(COAT_COLORS);
-      }
-    },
-    eyesColor: {
-      get() {
-        return getRandomElement(EYES_COLORS);
-      }
-    }
-  }
-  );
-  wizards.push(wizard);
+const generateWizard = function () {
+  return {
+    name: getRandomFullname(),
+    coatColor: getRandomElement(COAT_COLORS),
+    eyesColor: getRandomElement(EYES_COLORS)
+  };
 };
 
-for (let i = 0; i < 4; i++) {
-  newWizard();
-}
+const generateWizards = function (count = WIZARDS_COUNT) {
+  let wizards = [];
+  for (let i = 0; i < count; i++) {
+    wizards.push(generateWizard());
+  }
+  return wizards;
+};
 
-let renderWizard = function (wizard) {
+const renderWizard = function (wizard) {
   let wizardSimularItem = wizardItemTemplate.cloneNode(true);
   wizardSimularItem.querySelector('.wizard-coat').style.fill = wizard.coatColor;
   wizardSimularItem.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
@@ -73,13 +61,19 @@ let renderWizard = function (wizard) {
   return wizardSimularItem;
 };
 
-let fragment = document.createDocumentFragment();
+const renderWizards = function (wizards) {
+  let fragment = document.createDocumentFragment();
 
-for (let i = 0; i < wizards.length; i++) {
+  for (let i = 0; i < wizards.length; i++) {
+    fragment.appendChild(renderWizard(wizards[i]));
+  }
 
-  fragment.appendChild(renderWizard(wizards[i]));
-}
+  wizardSimularList.appendChild(fragment);
+};
 
-wizardSimularList.appendChild(fragment);
+const wizards = generateWizards();
+renderWizards(wizards);
 
+
+wizardSimular.classList.remove('hidden');
 setupModal.classList.remove('hidden');
