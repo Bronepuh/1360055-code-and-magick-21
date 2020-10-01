@@ -74,6 +74,48 @@ const renderWizards = function (wizards) {
 const wizards = generateWizards();
 renderWizards(wizards);
 
-
 wizardSimular.classList.remove('hidden');
 setupModal.classList.remove('hidden');
+
+const setupOpen = document.querySelector('.setup-open');
+const setupClose = document.querySelector('.setup-close');
+
+const onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    setupModal.classList.add('hidden');
+  }
+};
+
+const openPopup = function () {
+  setupModal.classList.remove('hidden');
+
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+const closePopup = function () {
+  setupModal.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    closePopup();
+  }
+});
