@@ -4,6 +4,7 @@ const WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', '
 const WIZARD_SURENAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 const COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 const EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+const FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 const WIZARDS_COUNT = 4;
 const setupModal = document.querySelector('.setup');
 const wizardSimular = document.querySelector('.setup-similar');
@@ -75,7 +76,7 @@ const wizards = generateWizards();
 renderWizards(wizards);
 
 wizardSimular.classList.remove('hidden');
-setupModal.classList.remove('hidden');
+// setupModal.classList.remove('hidden');
 
 const setupOpen = document.querySelector('.setup-open');
 const setupClose = document.querySelector('.setup-close');
@@ -89,7 +90,6 @@ const onPopupEscPress = function (evt) {
 
 const openPopup = function () {
   setupModal.classList.remove('hidden');
-
   document.addEventListener('keydown', onPopupEscPress);
 };
 
@@ -119,3 +119,53 @@ setupClose.addEventListener('keydown', function (evt) {
     closePopup();
   }
 });
+
+const setupWizardForm = setupModal.querySelector('.setup-wizard-form');
+
+const userNameInput = setupWizardForm.querySelector('.setup-user-name');
+
+userNameInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+
+userNameInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
+
+userNameInput.addEventListener('invalid', function () {
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});
+
+const coat = setupWizardForm.querySelector('.setup-wizard .wizard-coat');
+
+coat.addEventListener('click', function () {
+  let input = setupWizardForm.querySelector('input[name="coat-color"]');
+  coat.style.fill = getRandomElement(COAT_COLORS);
+  input.value = coat.style.fill;
+});
+
+const eyes = setupWizardForm.querySelector('.setup-wizard .wizard-eyes');
+
+eyes.addEventListener('click', function () {
+  let input = setupWizardForm.querySelector('input[name="eyes-color"]');
+  eyes.style.fill = getRandomElement(EYES_COLORS);
+  input.value = eyes.style.fill;
+});
+
+const fireball = setupWizardForm.querySelector('.setup-fireball-wrap');
+
+fireball.addEventListener('click', function () {
+  let input = setupWizardForm.querySelector('input[name="fireball-color"]');
+  let randomColor = getRandomElement(FIREBALL_COLORS);
+  fireball.style.background = randomColor;
+  input.value = randomColor;
+});
+
