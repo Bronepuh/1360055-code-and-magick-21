@@ -82,9 +82,9 @@ const setupOpen = document.querySelector('.setup-open');
 const setupClose = document.querySelector('.setup-close');
 
 const onPopupEscPress = function (evt) {
+  evt.preventDefault();
   if (evt.key === 'Escape') {
-    evt.preventDefault();
-    setupModal.classList.add('hidden');
+    closePopup();
   }
 };
 
