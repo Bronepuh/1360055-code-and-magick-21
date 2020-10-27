@@ -83,5 +83,16 @@
     fireball.style.background = randomColor;
     input.value = randomColor;
   });
+
+  window.setup.setupModal.classList.remove('hidden');
+
+  setupWizardForm.addEventListener('submit', function (evt) {
+
+    window.backend.save(new FormData(setupWizardForm), function () {
+      window.setup.setupModal.classList.add('hidden');
+    });
+    evt.preventDefault();
+
+  });
 })();
 
