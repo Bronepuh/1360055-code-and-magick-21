@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  const dialogHandle = window.setup.setupModal.querySelector('.upload');
+  const setupModal = document.querySelector('.setup');
+  const dialogHandle = setupModal.querySelector('.upload');
 
   dialogHandle.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -23,8 +24,8 @@
         y: startCords.y - moveEvt.clientY
       };
 
-      window.setup.setupModal.style.top = (window.setup.setupModal.offsetTop - shift.y) + 'px';
-      window.setup.setupModal.style.left = (window.setup.setupModal.offsetLeft - shift.x) + 'px';
+      setupModal.style.top = (setupModal.offsetTop - shift.y) + 'px';
+      setupModal.style.left = (setupModal.offsetLeft - shift.x) + 'px';
 
       startCords = {
         x: moveEvt.clientX,

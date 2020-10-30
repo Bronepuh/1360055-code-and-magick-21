@@ -1,21 +1,22 @@
 'use strict';
 (function () {
+  const setupModal = document.querySelector('.setup');
   const setupOpen = document.querySelector('.setup-open');
   const setupClose = document.querySelector('.setup-close');
 
   const onPopupEscPress = function (evt) {
-    window.util.isEscEvent(evt, closePopup);
+    window.utils.isEscEvent(evt, closePopup);
   };
 
   const openPopup = function () {
-    window.setup.setupModal.classList.remove('hidden');
+    setupModal.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
   };
 
   const closePopup = function () {
-    window.setup.setupModal.classList.add('hidden');
-    window.setup.setupModal.style.top = '80px';
-    window.setup.setupModal.style.left = '50%';
+    setupModal.classList.add('hidden');
+    setupModal.style.top = '80px';
+    setupModal.style.left = '50%';
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
@@ -24,7 +25,7 @@
   });
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, openPopup);
+    window.utils.isEnterEvent(evt, openPopup);
   });
 
   setupClose.addEventListener('click', function () {
@@ -32,10 +33,10 @@
   });
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, closePopup);
+    window.utils.isEnterEvent(evt, closePopup);
   });
 
-  const setupWizardForm = window.setup.setupModal.querySelector('.setup-wizard-form');
+  const setupWizardForm = setupModal.querySelector('.setup-wizard-form');
 
   const userNameInput = setupWizardForm.querySelector('.setup-user-name');
 
@@ -59,37 +60,12 @@
     }
   });
 
-  const coat = setupWizardForm.querySelector('.setup-wizard .wizard-coat');
-
-  coat.addEventListener('click', function () {
-    let input = setupWizardForm.querySelector('input[name="coat-color"]');
-    coat.style.fill = window.setup.getRandomElement(window.setup.coatColors);
-    input.value = coat.style.fill;
-  });
-
-  const eyes = setupWizardForm.querySelector('.setup-wizard .wizard-eyes');
-
-  eyes.addEventListener('click', function () {
-    let input = setupWizardForm.querySelector('input[name="eyes-color"]');
-    eyes.style.fill = window.setup.getRandomElement(window.setup.eyesColors);
-    input.value = eyes.style.fill;
-  });
-
-  const fireball = setupWizardForm.querySelector('.setup-fireball-wrap');
-
-  fireball.addEventListener('click', function () {
-    let input = setupWizardForm.querySelector('input[name="fireball-color"]');
-    let randomColor = window.setup.getRandomElement(window.setup.fireballColors);
-    fireball.style.background = randomColor;
-    input.value = randomColor;
-  });
-
-  window.setup.setupModal.classList.remove('hidden');
+  setupModal.classList.remove('hidden');
 
   setupWizardForm.addEventListener('submit', function (evt) {
 
     window.backend.save(new FormData(setupWizardForm), function () {
-      window.setup.setupModal.classList.add('hidden');
+      setupModal.classList.add('hidden');
     });
     evt.preventDefault();
 

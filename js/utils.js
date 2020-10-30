@@ -1,7 +1,11 @@
 'use strict';
 (function () {
+  const getRandomElement = function (array) {
+    const randomElementIndex = Math.floor(Math.random() * array.length);
+    return array[randomElementIndex];
+  };
 
-  window.util = {
+  window.utils = {
     isEscEvent: function (evt, action) {
       evt.preventDefault();
       if (evt.key === 'Escape') {
@@ -14,6 +18,8 @@
       if (evt.key === 'Enter') {
         action();
       }
-    }
+    },
+
+    getRandomElement: getRandomElement,
   };
 })();
