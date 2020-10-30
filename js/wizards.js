@@ -18,6 +18,7 @@
     let input = setupWizardForm.querySelector('input[name="coat-color"]');
     const newColor = window.utils.getRandomElement(COAT_COLORS);
     input.value = newColor;
+    coat.style.fill = newColor;
     wizard.onCoatChange(newColor);
   });
 
@@ -27,6 +28,7 @@
     let input = setupWizardForm.querySelector('input[name="eyes-color"]');
     const newColor = window.utils.getRandomElement(EYES_COLORS);
     input.value = newColor;
+    eyes.style.fill = newColor;
     wizard.onEyesChange(newColor);
   });
 

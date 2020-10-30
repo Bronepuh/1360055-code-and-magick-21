@@ -38,14 +38,14 @@
     }));
   };
 
-  window.wizard.setEyesChangeHandler(function (color) {
-    eyesColor = color;
-    updateWizards();
-  });
-
   window.wizard.setCoatChangeHandler(function (color) {
     coatColor = color;
-    updateWizards();
+    window.debounce(updateWizards);
+  });
+
+  window.wizard.setEyesChangeHandler(function (color) {
+    eyesColor = color;
+    window.debounce(updateWizards);
   });
 
   const successHandler = function (data) {
